@@ -1,0 +1,28 @@
+export const assets = [
+  {
+    path: "contents/cat1.jpg",
+    title: "Cat 1",
+  },
+  { path: "contents/cat1.jpg", title: "Cat 1" },
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat1.jpg', title: 'Cat 1'},
+    {path: 'contents/cat2.jpg', title: ''}
+];
