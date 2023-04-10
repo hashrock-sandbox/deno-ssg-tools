@@ -1,3 +1,5 @@
+import { Header } from "./components/header.tsx";
+
 export default function Page() {
   const css = {
     __html: `
@@ -12,6 +14,7 @@ export default function Page() {
         <title>Hello, World</title>
       </head>
       <body>
+        <Header />
         <style dangerouslySetInnerHTML={css} />
         <h1>Hello World</h1>
       </body>
