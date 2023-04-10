@@ -1,9 +1,9 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
-import { h } from "https://esm.sh/preact@10.11.2";
+import { h } from "https://esm.sh/preact@10.13.2";
 import {
   renderToString,
-} from "https://esm.sh/preact-render-to-string@5.2.6?deps=preact@10.11.2";
+} from "https://esm.sh/preact-render-to-string@5.2.6?deps=preact@10.13.2";
 
 export default function Page() {
   const css = {

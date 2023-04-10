@@ -39,7 +39,7 @@ const objs = arrayLiteralExpression.getChildrenOfKind(
 
 const dataAssets = [];
 
-for (const [i, e] of objs.entries()) {
+for (const e of objs) {
   const name = e.getPropertyOrThrow("path");
   const as = name.asKindOrThrow(SyntaxKind.PropertyAssignment);
   const lit = as.getChildrenOfKind(SyntaxKind.StringLiteral);
