@@ -1,5 +1,7 @@
-# Deno single-file TSX Static Site Generator
+# Asset config generator
 
-inspired by `ije/html`, and `fresh`.
+# Example
 
-https://github.com/ije/html
+> deno run -A morph.ts --out img.gen.ts --path assets
+
+generates `img.gen.ts` file from `assets` directory.

@@ -1,12 +1,22 @@
 import {
-  createWrappedNode,
-  Node,
   Project,
   SyntaxKind,
 } from "https://deno.land/x/ts_morph@18.0.0/mod.ts";
+import { walk } from "https://deno.land/std@0.182.0/fs/walk.ts";
+import { exists } from "https://deno.land/std@0.182.0/fs/exists.ts";
+import { parse } from "https://deno.land/std@0.182.0/flags/mod.ts";
+
+const flags = parse(Deno.args);
+
+const out = flags.out || "assets.gen.ts";
+const path = flags.path || "./";
+
+if (!(await exists(out))) {
+  Deno.writeTextFileSync(out, "export const assets = [];");
+}
 
 const project = new Project();
-const sourceFile = project.addSourceFileAtPath("contents/assets.gen.ts");
+const sourceFile = project.addSourceFileAtPath(out);
 const routesDeclaration = sourceFile.getVariableDeclarationOrThrow("assets");
 const arrayLiteralExpression = routesDeclaration.getInitializerIfKindOrThrow(
   SyntaxKind.ArrayLiteralExpression,
@@ -25,15 +35,13 @@ for (const [i, e] of objs.entries()) {
   dataAssets.push(lit.shift()?.getLiteralText());
 }
 
-import { walk } from "https://deno.land/std@0.177.0/fs/walk.ts";
-
 const dirAssets = [];
 
-for await (const entry of walk(`./`)) {
+for await (const entry of walk(path)) {
   if (
     entry.isFile &&
     (entry.name.endsWith(".jpg") || entry.name.endsWith(".png")) &&
-    !entry.name.startsWith("thumb") && !entry.name.startsWith("stand")
+    !entry.name.startsWith("thumb")
   ) {
     dirAssets.push(entry.path);
   }
@@ -57,44 +65,8 @@ for (const asset of dirAssets) {
     );
   }
 }
-// if (!dataAssets.includes(entry.path)) {
-//   arrayLiteralExpression.addElement(
-//     `{path: '${entry.path}', title: ''}`,
-//   );
-// }
-
-// objs.entries().forEach(([i, e]) => {
-//   const name = e.getPropertyOrThrow("path");
-//   console.log(
-//     i,
-//     name.getInitializerIfKindOrThrow(SyntaxKind.StringLiteral).getText(),
-//   );
-// });
-
-// objs.forEach((e) => {
-//   const name = e.getPropertyOrThrow("path");
-
-//   // e.getProperties().forEach((p) => {
-//   //   console.log(p);
-//   //   // console.log(p.getName());
-//   //   // console.log(p.getInitializerIfKindOrThrow(SyntaxKind.StringLiteral));
-//   // });
-//   // console.log(e.getText());
-// });
-
-// arrayLiteralExpression.getElements().forEach((e) => {
-//   e.
-//   console.log(e.getText());
-// });
-
-// arrayLiteralExpression.forEachChild((e) => {
-//   e.getExpressionIfKindOrThrow(SyntaxKind.ObjectLiteralExpression);
-//   const a = e.getObjectLiteralExpressionOrThrow();
-//   console.log(e.getText());
-// });
 
 await sourceFile.formatText({
   indentSize: 2,
 });
 await sourceFile.save();
-// console.log(d);
