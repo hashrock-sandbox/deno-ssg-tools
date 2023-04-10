@@ -16,31 +16,52 @@ const objs = arrayLiteralExpression.getChildrenOfKind(
   SyntaxKind.ObjectLiteralExpression,
 );
 
-const assets = [];
+const dataAssets = [];
 
 for (const [i, e] of objs.entries()) {
   const name = e.getPropertyOrThrow("path");
   const as = name.asKindOrThrow(SyntaxKind.PropertyAssignment);
   const lit = as.getChildrenOfKind(SyntaxKind.StringLiteral);
-  assets.push(lit.shift()?.getLiteralText());
+  dataAssets.push(lit.shift()?.getLiteralText());
 }
-console.log(assets);
 
 import { walk } from "https://deno.land/std@0.177.0/fs/walk.ts";
+
+const dirAssets = [];
+
 for await (const entry of walk(`./`)) {
   if (
     entry.isFile &&
     (entry.name.endsWith(".jpg") || entry.name.endsWith(".png")) &&
     !entry.name.startsWith("thumb") && !entry.name.startsWith("stand")
   ) {
-    console.log(entry.path);
-    if (!assets.includes(entry.path)) {
-      arrayLiteralExpression.addElement(
-        `{path: '${entry.path}', title: ''}`,
-      );
-    }
+    dirAssets.push(entry.path);
   }
 }
+
+for (const e of objs) {
+  const name = e.getPropertyOrThrow("path");
+  const as = name.asKindOrThrow(SyntaxKind.PropertyAssignment);
+  const lit = as.getChildrenOfKind(SyntaxKind.StringLiteral);
+  const asset = lit.shift()?.getLiteralText();
+
+  if (asset && !dirAssets.includes(asset)) {
+    arrayLiteralExpression.removeElement(e);
+  }
+}
+
+for (const asset of dirAssets) {
+  if (!dataAssets.includes(asset)) {
+    arrayLiteralExpression.addElement(
+      `{path: '${asset}', title: ''}`,
+    );
+  }
+}
+// if (!dataAssets.includes(entry.path)) {
+//   arrayLiteralExpression.addElement(
+//     `{path: '${entry.path}', title: ''}`,
+//   );
+// }
 
 // objs.entries().forEach(([i, e]) => {
 //   const name = e.getPropertyOrThrow("path");
@@ -72,5 +93,8 @@ for await (const entry of walk(`./`)) {
 //   console.log(e.getText());
 // });
 
+await sourceFile.formatText({
+  indentSize: 2,
+});
 await sourceFile.save();
 // console.log(d);
