@@ -2,14 +2,14 @@ export default function Page() {
   const css = {
     __html: `
       h1 {
-        color: red;
+        color: yellow;
       }
       `,
   };
   return (
     <html>
       <head>
-        <title>Hello, World</title>
+        <title>Hello</title>
       </head>
       <body>
         <style dangerouslySetInnerHTML={css} />

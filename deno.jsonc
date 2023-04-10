@@ -4,8 +4,8 @@
     "jsxImportSource": "preact"
   },
   "imports": {
-    "preact": "https://esm.sh/preact@10.13.1",
-    "preact/": "https://esm.sh/preact@10.13.1/"
+    "preact": "https://esm.sh/preact@10.13.2",
+    "preact/": "https://esm.sh/preact@10.13.2/"
   },
   "lock": false
 }
